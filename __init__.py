@@ -14,12 +14,15 @@ r = redis.StrictRedis(
     password=os.environ.get("REDIS_PASSWORD")
 )
 
-management_secret = os.environ.get("MANAGER_SECRET")
+# This was going to be a really crappy auth system.
+# But it's crappy, so let's just wait and do something better
+# management_secret = os.environ.get("MANAGER_SECRET")
+#
+# if management_secret is None:
+#     management_secret = uuid.uuid4()
+#     # Warning: prints temporary key to STDOUT
+#     print("Management Secret: %s" % management_secret)
 
-if management_secret is None:
-    management_secret = uuid.uuid4()
-    # Prints to STDOUT, which is not typically a good idea.
-    print("Management Secret: %s" % management_secret)
 
 service_url = os.environ.get("SERVICE_SUFFIX", "/")
 
@@ -65,5 +68,6 @@ def hello_world():
     return render_template("editor.html", data=template_data)
 
 
-if __name__ == '__main__':
-    app.run()
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0')
