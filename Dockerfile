@@ -3,7 +3,7 @@ EXPOSE 5000
 ENV PYTHONUNBUFFERED 1
 
 RUN mkdir -p /srv/flask
-WORKDIR /srv/flask/
+WORKDIR /srv/flask
 ADD . /srv/flask/
 
 RUN pip install -r requirements.txt
