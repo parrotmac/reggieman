@@ -2,9 +2,9 @@ FROM python:3.5
 EXPOSE 5000
 ENV PYTHONUNBUFFERED 1
 
-RUN mkdir -p /srv/flask
-WORKDIR /srv/flask
-ADD . /srv/flask/
+RUN mkdir -p /srv/reggieman
+ADD . /srv/reggieman/
+WORKDIR /srv
 
 RUN pip install -r requirements.txt
 
