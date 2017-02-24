@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reggieman</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <style>
+        body {
+            padding-left: 25px;
+            padding-bottom: 25px;
+            padding-right: 25px;
+        }
+        summary {
+            background-color: #89c3ff;
+        }
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+        }
+        li {
+            margin: 0;
+            padding: 0;
+        }
+        li:hover {
+            background-color: #89c3ff;
+        }
+        a:link, a:visited {
+            color: #475c6f;
+        }
+        .heading {
+            padding-top: 8px;
+            padding-bottom: 8px;
+        }
+        .heading li {
+            margin: 0 10px 0 0;
+            display: inline-block;
+            background: #89c3ff;
+        }
+    </style>
+</head>
+<body>
+{#<div class="messages">#}
+{#    {% for message in messages %}#}
+{#        <div class="alert alert-{{ message.tags }} alert-dismissible">{{ message|safe }}</div>#}
+{#    {% endfor %}#}
+{#</div>#}
+
+        <form action="{{ data["service_url"] }}" method="POST" class="pure-form">
+        <fieldset>
+        <legend>
+            {% if current_redis_key %}Update{% else %}Add{% endif %} a redis key
+        </legend>
+            <label for="redisInput">
+                <strong>
+                {% if data['current_redis_key'] %}
+                    {{ data['current_redis_key'] }}
+                {% else %}
+                    <input type="text" name="redisKey" size="40" placeholder="New Redis Key">
+                {% endif %}
+                </strong>
+            </label>
+            <br>
+        {% if data['current_redis_key'] %}
+            <input type="hidden" name="redisKey" value="{{ data['current_redis_key'] }}">
+        {% endif %}
+            <br>
+            <textarea id="redisInput" name="redisValue" placeholder="No Value Set" cols="80" rows="10">{{ data['current_redis_value'] }}</textarea>
+            <br>
+            <br>
+
+            <button type="submit" class="btn btn-primary">{% if data['current_redis_key'] %}Update{% else %}Add{% endif %}</button>
+        </fieldset>
+    </form>
+
+    <hr>
+    <form action="{{ data["service_url"] }}" method="post" id="deleteKey"></form>
+
+    <ul>
+    {% for key, value in data["redis_strings"].items() %}
+    <li>
+        <p>
+            <strong>
+                <a href="?key={{ key }}">{{ key }}</a>
+            </strong>: {{ value }} <button type="submit" form="deleteKey" name="delete" value="{{ key }}" onclick="if(!confirm('Please confirm deletion of Redis key \'{{ key }}\'')) { event.preventDefault(); event.stopPropagation(); return false; }" class="btn btn-sm btn-danger"><i class="fa fa-times" aria-hidden="true"></i></button>
+        </p>
+    </li>
+    {% endfor %}
+    </ul>
+
+</body>
+</html>
