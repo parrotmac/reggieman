@@ -1,0 +1,16 @@
+clone:
+  path: bitbucket.org/isaacparker/reggieman/
+
+build:
+  image: python:3.5
+  commands:
+    - pip install -r requirements.txt
+
+publish:
+  docker:
+    username: stag9
+    password: 4z1cD6PSiamLub67x1Cq6IWVx30C5fX
+    email: parrotmac@gmail.com
+    registry: registry.stag9.com
+    repo: reggieman
+    tag: latest
