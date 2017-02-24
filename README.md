@@ -15,7 +15,7 @@ SERVICE_URL=/
 `SERVICE_URL` is intended to be configurable, in case your instance is running behind some sort of proxy that doesn't allow redirecting back to `/`.
 
 #### Example Docker Command: ####
-`docker --port 5000:5000 -e REDIS_PASSWORD=password123 -d registry.stag9.com/reggieman`
+`docker --port 5000:5000 -e REDIS_PASSWORD=password123 -d example.com/reggieman`
 
 ## IMPORTANT: There's no authentication. ##
 Please secure this behind, at the very least, HTTP Basic auth if you'll be exposing this to the public internet.
