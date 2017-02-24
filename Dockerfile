@@ -6,6 +6,6 @@ RUN mkdir -p /srv/reggieman
 ADD . /srv/reggieman/
 WORKDIR /srv
 
-RUN pip install -r requirements.txt
+RUN pip install -r /srv/reggieman/requirements.txt
 
 ENTRYPOINT gunicorn --bind 0.0.0.0:5000 reggieman.wsgi
